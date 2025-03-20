@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRIDGE Framework for Payment Solutions</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #60a5fa;
+            --text-color: #333333;
+            --light-bg: #f8fafc;
+            --dark-bg: #0f172a;
+            --success-color: #10b981;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 4rem;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        header {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: var(--spacing-lg) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: var(--spacing-sm) 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo svg {
+            margin-right: var(--spacing-sm);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: var(--spacing-md);
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .hero {
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto var(--spacing-lg);
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .section {
+            padding: var(--spacing-lg) 0;
+        }
+
+        .section + .section {
+            padding-top: 0;
+        }
+
+        #framework, #benefits {
+            padding-top: var(--spacing-md);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark-bg);
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--spacing-md);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-icon {
+            margin-right: var(--spacing-sm);
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: var(--spacing-lg);
+        }
+
+        .bridge-step {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .bridge-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .bridge-step h4 {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+            color: var(--primary-color);
+        }
+
+        .step-letter {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--spacing-sm);
+            font-weight: 600;
+        }
+
+        .bridge-step p {
+            padding-left: calc(30px + var(--spacing-sm));
+            color: var(--text-color);
+        }
+
+        .framework-visual {
+            max-width: 100%;
+            height: auto;
+            margin: var(--spacing-lg) auto;
+            display: block;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+        }
+
+        .benefits {
+            background-color: var(--light-bg);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .benefit-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--spacing-md);
+            flex-shrink: 0;
+        }
+
+        .benefit-content h3 {
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark-bg);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: var(--spacing-xl) 0;
+        }
+
+        .cta-section h2 {
+            margin-bottom: var(--spacing-lg);
+            font-size: 2rem;
+        }
+
+        footer {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: var(--spacing-lg) 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .bridge-diagram {
+            margin: var(--spacing-xl) auto;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .bridge-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: var(--spacing-lg);
+        }
+
+        .bridge-step-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            min-width: 140px;
+            transition: var(--transition);
+        }
+
+        .bridge-step-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .step-label {
+            text-align: center;
+            font-weight: 600;
+            color: var(--dark-bg);
+        }
+
+        .bridge-arrow {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Presentation styles */
+        .slide-container {
+            width: 100%;
+            background: white;
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            text-align: left;
+            border-radius: var(--border-radius);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .controls button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        .controls button:hover {
+            background: var(--secondary-color);
+        }
+        
+        .slide-number {
+            text-align: right;
+            margin-top: var(--spacing-md);
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--dark-bg);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                gap: var(--spacing-lg);
+                padding: var(--spacing-lg) 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.75rem;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .benefit-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .benefit-icon {
+                margin-right: 0;
+                margin-bottom: var(--spacing-sm);
+            }
+
+            .bridge-flow {
+                flex-direction: column;
+            }
+            
+            .bridge-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .card-body {
+                padding: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="2" x2="12" y2="6"></line>
+                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                        <line x1="18" y1="12" x2="22" y2="12"></line>
+                        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                        <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                    </svg>
+                    BRIDGE Framework
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#framework">Framework</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#presentation">Presentation</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="hamburger" id="hamburger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Streamline Software Solution Implementation</h1>
+            <p>The BRIDGE framework provides a systematic methodology from initial engagement to implementation, ensuring consistency and repeatability in the technical presales process.</p>
+            <a href="#framework" class="cta-button">Explore the Framework</a>
+        </div>
+    </section>
+
+    <section class="section" id="overview">
+        <div class="container">
+            <div class="section-title">
+                <h2>Overview</h2>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"></path>
+                                <path d="M2 20h20"></path>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">The Challenge</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Implementing software solution requires balancing technical and business considerations, especially payment solutions. Financial institutions face complex challenges when adopting new payment technologies.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">The Solution</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>A structured approach is essential for success. The BRIDGE framework offers a systematic methodology that guides organizations through the entire implementation process.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v4"></path>
+                                <path d="M12 18v4"></path>
+                                <path d="M4.93 4.93l2.83 2.83"></path>
+                                <path d="M16.24 16.24l2.83 2.83"></path>
+                                <path d="M2 12h4"></path>
+                                <path d="M18 12h4"></path>
+                                <path d="M4.93 19.07l2.83-2.83"></path>
+                                <path d="M16.24 7.76l2.83-2.83"></path>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">The Outcome</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Consistent and repeatable technical presales process, reduced implementation time, and increased success rates for payment solution integrations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="framework">
+        <div class="container">
+            <div class="section-title">
+                <h2>The BRIDGE Framework</h2>
+            </div>
+            <p class="text-center" style="max-width: 800px; margin: 0 auto var(--spacing-xl);">
+                The BRIDGE framework provides a comprehensive approach to implementing payment solutions, guiding you from initial business understanding through to execution and growth.
+            </p>
+            
+            <div class="framework-visual">
+            <div class="card">
+                <div class="card-body">
+                    <div class="bridge-step">
+                        <h4><span class="step-letter">B</span> Business Understanding</h4>
+                        <p>Begin with a comprehensive understanding of the client's business needs, current processes, and challenges. This foundation ensures the payment solution aligns with strategic objectives.</p>
+                    </div>
+                    <div class="bridge-step">
+                        <h4><span class="step-letter">R</span> Requirements Gathering</h4>
+                        <p>Identify and document specific technical and operational requirements, including integration points, security needs, and compliance considerations.</p>
+                    </div>
+                    <div class="bridge-step">
+                        <h4><span class="step-letter">I</span> Integration Planning</h4>
+                        <p>Develop a detailed integration plan that outlines how the payment solution will connect with existing systems, including APIs, data flows, and architecture considerations.</p>
+                    </div>
+                    <div class="bridge-step">
+                        <h4><span class="step-letter">D</span> Design & Development</h4>
+                        <p>Create technical designs and develop the necessary components to implement the payment solution according to requirements.</p>
+                    </div>
+                    <div class="bridge-step">
+                        <h4><span class="step-letter">G</span> Go-Live Preparation</h4>
+                        <p>Conduct thorough testing, prepare documentation, and train stakeholders to ensure a smooth transition to the new payment solution.</p>
+                    </div>
+                    <div class="bridge-step">
+                        <h4><span class="step-letter">E</span> Execution & Growth</h4>
+                        <p>Launch the payment solution and provide ongoing support, monitoring, and optimization to ensure continued success and growth.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bridge-diagram">
+                <div class="bridge-flow">
+                    <div class="bridge-step-box">
+                        <div class="step-circle">B</div>
+                        <div class="step-label">Business Understanding</div>
+                    </div>
+                    <div class="bridge-arrow">→</div>
+                    <div class="bridge-step-box">
+                        <div class="step-circle">R</div>
+                        <div class="step-label">Requirements Gathering</div>
+                    </div>
+                    <div class="bridge-arrow">→</div>
+                    <div class="bridge-step-box">
+                        <div class="step-circle">I</div>
+                        <div class="step-label">Integration Planning</div>
+                    </div>
+                    <div class="bridge-arrow">→</div>
+                    <div class="bridge-step-box">
+                        <div class="step-circle">D</div>
+                        <div class="step-label">Design & Development</div>
+                    </div>
+                    <div class="bridge-arrow">→</div>
+                    <div class="bridge-step-box">
+                        <div class="step-circle">G</div>
+                        <div class="step-label">Go-Live Preparation</div>
+                    </div>
+                    <div class="bridge-arrow">→</div>
+                    <div class="bridge-step-box">
+                        <div class="step-circle">E</div>
+                        <div class="step-label">Execution & Growth</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="presentation">
+        <div class="container">
+            <div class="section-title">
+                <h2>BRIDGE Framework Application: Loyalty Program for a Bank</h2>
+            </div>
+            <div class="slide-container">
+                <h2 id="slide-title">Business Context Mapping</h2>
+                <p id="slide-content">Understanding the Bank's Loyalty Objectives:<br><br>
+                    - Current State Assessment: No loyalty program, lower card usage.<br>
+                    - Business Objectives: Increase transaction volume, improve primary card status, reduce churn, generate new revenue.<br>
+                    - Customer Journey Mapping: Identify friction points.<br>
+                    - Stakeholder Alignment: Secure cross-functional buy-in.</p>
+                <div class="slide-number" id="slide-number">Slide 1 of 6</div>
+            </div>
+            <div class="controls">
+                <button onclick="prevSlide()">&larr; Previous</button>
+                <button onclick="nextSlide()">Next &rarr;</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <h2>Ready to Implement Your Solution?</h2>
+            <p style="margin-bottom: var(--spacing-lg);">I can help you navigate the journey from concept to execution.</p>
+            <a href="https://www.linkedin.com/in/pratikpadiya/" class="cta-button" target="_blank" rel="noopener noreferrer">Get Started Today</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>A systematic approach to payment solutions implementation</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top" id="backToTop">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </a>
+
+    <script>
+    // Header scroll effect
+    window.addEventListener('scroll', function() {
+        const header = document.getElementById('header');
+        const backToTop = document.getElementById('backToTop');
+        
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+            backToTop.classList.add('visible');
+        } else {
+            header.classList.remove('scrolled');
+            backToTop.classList.remove('visible');
+        }
+    });
+    
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    
+    hamburger.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking on a link
+    const navItems = document.querySelectorAll('.nav-links a');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            navLinks.classList.remove('active');
+        });
+    });
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Presentation slides
+    const slides = [
+        {
+            title: "Business Context Mapping",
+            content: "Understanding the Bank's Loyalty Objectives:<br><br> - Current State Assessment: No loyalty program, lower card usage.<br> - Business Objectives: Increase transaction volume, improve primary card status, reduce churn, generate new revenue.<br> - Customer Journey Mapping: Identify friction points.<br> - Stakeholder Alignment: Secure cross-functional buy-in."
+        },
+        {
+            title: "Risk & Regulatory Alignment",
+            content: "Navigating Compliance Requirements:<br><br> - Regulatory Assessment: Disclosure, accounting, data privacy, AML.<br> - Risk Mitigation: Point expiration policy, legal review, fraud detection, data governance.<br> - Compliance Documentation: Ensure adherence to laws and regulations."
+        },
+        {
+            title: "Integration Pathway Visualization",
+            content: "Technical Implementation:<br><br> - System Architecture: Real-time transaction monitoring, points engine, customer portal, merchant onboarding, analytics dashboard.<br> - Data Flow: Transaction to rules engine, redemption processing, personalization system.<br> - Security: Encryption, access controls, audit logging."
+        },
+        {
+            title: "Demo Customization Matrix",
+            content: "Tailored Demonstrations:<br><br> - Executive: ROI, retention impact, revenue increase.<br> - Marketing: Segmentation, campaign management, personalization.<br> - IT: Architecture, integration, security.<br> - Customer Experience: User journey, mobile interface, seamless banking integration."
+        },
+        {
+            title: "Guided Proof-of-Concept Roadmap",
+            content: "Structured Implementation:<br><br> - Phase 1: Foundation - Points earning, MVP portal.<br> - Phase 2: Redemption - Gift cards, fulfillment, merchant partners.<br> - Phase 3: Expansion - Tiered earning, bonuses, merchant-funded offers.<br> - Phase 4: Analytics - Dashboard, A/B testing, personalization."
+        },
+        {
+            title: "Executive-to-Engineer Communication Plan",
+            content: "Ensuring Alignment:<br><br> - Executives: Monthly reviews, ROI updates.<br> - Marketing: Campaign planning, training.<br> - IT: Weekly stand-ups, documentation.<br> - Customer Staff: Training, guides, updates.<br> - Cross-Functional: Project tool, common metrics, escalation paths."
+        }
+    ];
+
+    let index = 0;
+    function nextSlide() {
+        index = (index + 1) % slides.length;
+        updateSlide();
+    }
+
+    function prevSlide() {
+        index = (index - 1 + slides.length) % slides.length;
+        updateSlide();
+    }
+
+    function updateSlide() {
+        document.getElementById("slide-title").innerHTML = slides[index].title;
+        document.getElementById("slide-content").innerHTML = slides[index].content;
+        document.getElementById("slide-number").innerHTML = `Slide ${index + 1} of ${slides.length}`;
+    }
+    </script>
+</body>
+</html>
+<!-- End of webpage_redesigned.html -->
